@@ -54,8 +54,6 @@ function getCircleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(/* value1, value2 */) {
-  // const average = (value1 + value2) / 2;
-  // return average;
   throw new Error('Not implemented');
 }
 
@@ -238,8 +236,12 @@ function isPrime(n) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber(/* value, def */) {
-  throw new Error('Not implemented');
+function toNumber(value, def) {
+  let result = Number(value);
+  if (!result) {
+    result = def;
+  }
+  return result;
 }
 
 module.exports = {
