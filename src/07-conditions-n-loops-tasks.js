@@ -436,7 +436,7 @@ const getCommonDirectoryPath = (pathes) => {
     if (pathes.some((path) => path[i] !== pathFirst[i])) break;
     if (pathFirst[i] === '/' || i === pathFirst.length - 1) index = i;
   }
-  return index === undefined ? '' : pathFirst.slice(0, index + 1);
+  return pathFirst.slice(0, index + 1);
 };
 
 
