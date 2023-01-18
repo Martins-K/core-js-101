@@ -64,8 +64,10 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom(/* args */) {
-  throw new Error('Not implemented');
+function getPolynom(...args) {
+  return (x) => [...args].reduce(
+    (acc, val, i) => acc + val * x ** (args.length - 1 - i), 0,
+  );
 }
 
 
@@ -83,9 +85,15 @@ function getPolynom(/* args */) {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
-}
+
+// using arrow function here:
+const memoize = (func) => {
+  let res;
+  return () => {
+    if (!res) res = func();
+    return res;
+  };
+};
 
 
 /**
@@ -103,8 +111,16 @@ function memoize(/* func */) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+
+function retry(func, attempts) {
+  return function attempt() {
+    const a = attempts;
+    try {
+      return func();
+    } catch (e) {
+      return attempt(a - 1);
+    }
+  };
 }
 
 
@@ -131,9 +147,13 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
-}
+const logger = (func, logFunc) => (...args) => {
+  const argsString = JSON.stringify(args).slice(1, -1);
+  logFunc(`${func.name}(${argsString}) starts`);
+  const res = func(...args);
+  logFunc(`${func.name}(${argsString}) ends`);
+  return res;
+};
 
 
 /**
