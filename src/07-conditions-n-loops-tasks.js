@@ -367,9 +367,29 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
-}
+const isBracketsBalanced = (str) => {
+  const brackets = [];
+  const openBrackets = new Set(['{', '[', '(', '<']);
+  const closeBrackets = new Set(['}', ']', ')', '>']);
+  const matchingBrackets = {
+    '}': '{',
+    ']': '[',
+    ')': '(',
+    '>': '<',
+  };
+  for (let i = 0; i < str.length; i += 1) {
+    const bracket = str[i];
+    if (openBrackets.has(bracket)) {
+      brackets.push(bracket);
+    } else if (closeBrackets.has(bracket)) {
+      if (brackets.length === 0 || brackets[brackets.length - 1] !== matchingBrackets[bracket]) {
+        return false;
+      }
+      brackets.pop();
+    }
+  }
+  return brackets.length === 0;
+};
 
 
 /**
@@ -409,9 +429,15 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
-}
+const getCommonDirectoryPath = (pathes) => {
+  let index;
+  const pathFirst = pathes[0];
+  for (let i = 0; i < pathFirst.length; i += 1) {
+    if (pathes.some((path) => path[i] !== pathFirst[i])) break;
+    if (pathFirst[i] === '/' || i === pathFirst.length - 1) index = i;
+  }
+  return index === undefined ? '' : pathFirst.slice(0, index + 1);
+};
 
 
 /**
